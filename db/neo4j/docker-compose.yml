@@ -1,30 +1,47 @@
+---
 version: "2"
 
 x-svcdef: &service-defaults
-  restart: always
+  # restart: always
   environment:
-    - TERM="xterm-256color"
+    - TERM=xterm-256color
   networks: [ bridge ]
 
+x-neo4j: &neo4j-defaults
+  build: ./neo4j
+  ports:
+    - 7473:7473
+    - 7474:7474
+    - 7687:7687
+
 services:
-  neo4j:
+  play:
     <<: *service-defaults
-    container_name: neo4j-lc
-    build: ./neo4j
+    <<: *neo4j-defaults
     volumes:
-      - /neo4j/data:/data
-      - /neo4j/conf:/conf
+      - /neo4j/play/data:/data
+      - /neo4j/play/conf:/conf
       - /neo4j/import:/import
-      - /neo4j/logs:/logs
-      - /neo4j/metrics:/metrics
-      - /neo4j/ssl:/ssl
-      - /neo4j/plugins:/plugins
-      # Note: apoc can be manually installed into the plugins directory, releases page:
-      #      https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases
-    ports:
-      - 7473:7473
-      - 7474:7474
-      - 7687:7687
+      - /neo4j/play/logs:/logs
+      - /neo4j/play/metrics:/metrics
+      - /neo4j/play/ssl:/ssl
+      - /neo4j/play/plugins:/plugins
+        # Note: apoc can be manually installed into the plugins directory, releases page:
+        #      https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases
+
+  interests:
+    <<: *service-defaults
+    <<: *neo4j-defaults
+    volumes:
+      - /neo4j/interests/data:/data
+      - /neo4j/interests/conf:/conf
+      - /neo4j/import:/import
+      - /neo4j/interests/logs:/logs
+      - /neo4j/interests/metrics:/metrics
+      - /neo4j/interests/ssl:/ssl
+      - /neo4j/interests/plugins:/plugins
+        # Note: apoc can be manually installed into the plugins directory, releases page:
+        #      https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases
 
 networks:
   bridge:
