@@ -1,0 +1,3 @@
+#!/bin/bash
+cp ./neo4j.conf /neo4j/conf/
+ls -alh /neo4j/conf
