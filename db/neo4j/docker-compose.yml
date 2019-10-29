@@ -2,7 +2,7 @@
 version: "2"
 
 x-svcdef: &service-defaults
-  # restart: always
+  restart: always
   environment:
     - TERM=xterm-256color
   networks: [ bridge ]
@@ -21,7 +21,7 @@ services:
     volumes:
       - /neo4j/play/data:/data
       - /neo4j/play/conf:/conf
-      - /neo4j/import:/import
+      - ./import:/import
       - /neo4j/play/logs:/logs
       - /neo4j/play/metrics:/metrics
       - /neo4j/play/ssl:/ssl
@@ -35,7 +35,7 @@ services:
     volumes:
       - /neo4j/interests/data:/data
       - /neo4j/interests/conf:/conf
-      - /neo4j/import:/import
+      - ./import:/import
       - /neo4j/interests/logs:/logs
       - /neo4j/interests/metrics:/metrics
       - /neo4j/interests/ssl:/ssl

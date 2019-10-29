@@ -1,3 +1,29 @@
-#!/bin/bash
-cp ./neo4j.conf /neo4j/conf/
-ls -alh /neo4j/conf
+#!/bin/zsh
+
+help() {
+	cat <<- EOF
+		This script expects one parameter to be the project located in /neo4j which is
+		a directory containing a conf directory, currently this list is:
+			[94m`print -l /neo4j/*/conf(#q/:h:t) | perl -pe 's!^!    !'`[m
+	EOF
+	
+	exit 0;
+}
+
+if [[ $# -eq 0 ]] {
+	help;
+}
+
+DIR="$1"; shift;
+
+if [[ ! -d /neo4j/${DIR}/conf ]] {
+	cat <<- EOF
+		/neo4j/[91m${DIR}[m/conf is not a directory.
+	
+	EOF
+	help;
+}
+
+cp ./neo4j.conf /neo4j/${DIR}/conf/ && echo "./neo4j.conf copied." && echo;
+
+ls -alh /neo4j/${DIR}/conf/*.conf
