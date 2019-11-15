@@ -20,7 +20,7 @@ services:
     <<: *neo4j-defaults
     volumes:
       - /neo4j/play/data:/data
-      - /neo4j/play/conf:/conf
+      - /neo4j/play/conf:/var/lib/neo4j/conf
       - ./import:/import
       - /neo4j/play/logs:/logs
       - /neo4j/play/metrics:/metrics
@@ -34,7 +34,7 @@ services:
     <<: *neo4j-defaults
     volumes:
       - /neo4j/interests/data:/data
-      - /neo4j/interests/conf:/conf
+      - /neo4j/interests/conf:/var/lib/neo4j/conf
       - ./import:/import
       - /neo4j/interests/logs:/logs
       - /neo4j/interests/metrics:/metrics
